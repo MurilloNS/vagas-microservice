@@ -5,6 +5,8 @@ import com.vagasproject.msuser.dto.UserResponse;
 import com.vagasproject.msuser.entities.User;
 import com.vagasproject.msuser.repositories.UserRepository;
 import com.vagasproject.msuser.services.UserService;
+import com.vagasproject.msuser.services.exceptions.EmailAlreadyExist;
+import com.vagasproject.msuser.services.exceptions.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,12 +25,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User createUser(UserRequest userRequest) {
-        User user = User.builder()
-                .name(userRequest.getName()).email(userRequest.getEmail()).password(userRequest.getPassword())
-                .resume(userRequest.getResume()).build();
+        if (userRepository.findByEmail(userRequest.getEmail()) == null) {
+            User user = User.builder()
+                    .name(userRequest.getName()).email(userRequest.getEmail()).password(userRequest.getPassword())
+                    .resume(userRequest.getResume()).build();
 
-        userRepository.save(user);
-        return user;
+            userRepository.save(user);
+            return user;
+        } else {
+            throw new EmailAlreadyExist("Esse e-mail já está cadastrado!");
+        }
     }
 
     @Override
@@ -40,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
             return result;
         } catch (NoSuchElementException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!");
+            throw new ObjectNotFoundException("Usuário não encontrado!");
         }
     }
 }
