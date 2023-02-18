@@ -2,6 +2,7 @@ package com.vagasproject.msuser.controllers;
 
 import com.vagasproject.msuser.dto.UserRequest;
 import com.vagasproject.msuser.dto.UserResponse;
+import com.vagasproject.msuser.dto.UserUpdate;
 import com.vagasproject.msuser.entities.User;
 import com.vagasproject.msuser.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,10 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserUpdate> partialUpdateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) {
+        return ResponseEntity.ok(userService.partialUpdateUser(id, userUpdate));
     }
 }

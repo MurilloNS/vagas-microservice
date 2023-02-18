@@ -2,6 +2,7 @@ package com.vagasproject.msuser.services.impl;
 
 import com.vagasproject.msuser.dto.UserRequest;
 import com.vagasproject.msuser.dto.UserResponse;
+import com.vagasproject.msuser.dto.UserUpdate;
 import com.vagasproject.msuser.entities.User;
 import com.vagasproject.msuser.repositories.UserRepository;
 import com.vagasproject.msuser.services.UserService;
@@ -45,6 +46,20 @@ public class UserServiceImpl implements UserService {
                     .resume(user.getResume()).build();
 
             return result;
+        } catch (NoSuchElementException e) {
+            throw new ObjectNotFoundException("Usuário não encontrado!");
+        }
+    }
+
+    @Override
+    public UserUpdate partialUpdateUser(Long id, UserUpdate userUpdate) {
+        try {
+            User user = userRepository.findById(id).get();
+            user.setName(userUpdate.getName());
+            user.setPassword(userUpdate.getPassword());
+            user.setResume(userUpdate.getResume());
+            userRepository.save(user);
+            return userUpdate;
         } catch (NoSuchElementException e) {
             throw new ObjectNotFoundException("Usuário não encontrado!");
         }
