@@ -8,9 +8,9 @@ import com.vagasproject.msuser.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 
 @RestController
@@ -38,7 +38,13 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserUpdate> partialUpdateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) {
+    public ResponseEntity<UserUpdate> partialUpdateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) throws InvocationTargetException, IllegalAccessException {
         return ResponseEntity.ok(userService.partialUpdateUser(id, userUpdate));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,5 +1,6 @@
 package com.vagasproject.msuser.services.impl;
 
+import com.vagasproject.msuser.components.NullAwareBeanUtilsBean;
 import com.vagasproject.msuser.dto.UserRequest;
 import com.vagasproject.msuser.dto.UserResponse;
 import com.vagasproject.msuser.dto.UserUpdate;
@@ -9,19 +10,16 @@ import com.vagasproject.msuser.services.UserService;
 import com.vagasproject.msuser.services.exceptions.EmailAlreadyExist;
 import com.vagasproject.msuser.services.exceptions.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.lang.reflect.InvocationTargetException;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final NullAwareBeanUtilsBean beanUtilsBean;
 
     @Override
     @Transactional
@@ -40,28 +38,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserById(Long id) {
-        try {
-            User user = userRepository.findById(id).get();
-            UserResponse result = UserResponse.builder().name(user.getName()).email(user.getEmail())
-                    .resume(user.getResume()).build();
-
-            return result;
-        } catch (NoSuchElementException e) {
-            throw new ObjectNotFoundException("Usuário não encontrado!");
-        }
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(("Usuário não encontrado!")));
+        return UserResponse.builder().name(user.getName()).email(user.getEmail()).resume(user.getResume()).build();
     }
 
     @Override
-    public UserUpdate partialUpdateUser(Long id, UserUpdate userUpdate) {
-        try {
-            User user = userRepository.findById(id).get();
-            user.setName(userUpdate.getName());
-            user.setPassword(userUpdate.getPassword());
-            user.setResume(userUpdate.getResume());
-            userRepository.save(user);
-            return userUpdate;
-        } catch (NoSuchElementException e) {
-            throw new ObjectNotFoundException("Usuário não encontrado!");
-        }
+    @Transactional
+    public UserUpdate partialUpdateUser(Long id, UserUpdate userUpdate) throws InvocationTargetException, IllegalAccessException {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
+        beanUtilsBean.copyProperties(user, userUpdate);
+        userRepository.save(user);
+        return userUpdate;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }
