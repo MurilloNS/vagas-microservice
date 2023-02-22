@@ -1,0 +1,22 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 0
+
+spring:
+  application:
+    name: ms-vagas
+  data:
+    mongodb:
+      username: root
+      password: root
+      uri: mongodb://root:root@localhost:27017
+      database: ms-vagas
+      port: 27017
+      host: localhost
