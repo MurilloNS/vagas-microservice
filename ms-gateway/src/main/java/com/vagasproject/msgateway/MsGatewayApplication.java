@@ -19,6 +19,9 @@ public class MsGatewayApplication {
 
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
-        return builder.routes().route(r -> r.path("/api/user/**").uri("lb://ms-user")).build();
+        return builder.routes()
+                .route(r -> r.path("/api/user/**").uri("lb://ms-user"))
+                .route(r -> r.path("/api/vaga/**").uri("lb://ms-vaga"))
+                .build();
     }
 }

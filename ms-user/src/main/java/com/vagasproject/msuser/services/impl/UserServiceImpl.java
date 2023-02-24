@@ -29,8 +29,7 @@ public class UserServiceImpl implements UserService {
                     .name(userRequest.getName()).email(userRequest.getEmail()).password(userRequest.getPassword())
                     .resume(userRequest.getResume()).build();
 
-            userRepository.save(user);
-            return user;
+            return userRepository.save(user);
         } else {
             throw new EmailAlreadyExist("Esse e-mail já está cadastrado!");
         }

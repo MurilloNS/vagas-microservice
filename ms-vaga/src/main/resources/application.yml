@@ -11,7 +11,7 @@ server:
 
 spring:
   application:
-    name: ms-vagas
+    name: ms-vaga
   data:
     mongodb:
       username: root

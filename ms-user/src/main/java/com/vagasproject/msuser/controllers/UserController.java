@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserRequest userRequest) {
         User newUser = userService.createUser(userRequest);
 
         URI location = ServletUriComponentsBuilder
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserUpdate> partialUpdateUser(@PathVariable Long id, @RequestBody UserUpdate userUpdate) throws InvocationTargetException, IllegalAccessException {
+    public ResponseEntity<UserUpdate> partialUpdateUser(@PathVariable Long id, @Valid @RequestBody UserUpdate userUpdate) throws InvocationTargetException, IllegalAccessException {
         return ResponseEntity.ok(userService.partialUpdateUser(id, userUpdate));
     }
 
