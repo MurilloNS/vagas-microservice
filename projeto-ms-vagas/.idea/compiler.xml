@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ms-vaga" />
         <module name="ms-eureka" />
+        <module name="ms-administrator" />
         <module name="ms-gateway" />
         <module name="ms-user" />
       </profile>
@@ -16,6 +17,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ms-administrator" options="-parameters" />
       <module name="ms-eureka" options="-parameters" />
       <module name="ms-gateway" options="-parameters" />
       <module name="ms-user" options="-parameters" />

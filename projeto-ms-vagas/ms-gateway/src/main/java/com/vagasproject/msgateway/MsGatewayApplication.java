@@ -22,6 +22,7 @@ public class MsGatewayApplication {
         return builder.routes()
                 .route(r -> r.path("/api/user/**").uri("lb://ms-user"))
                 .route(r -> r.path("/api/vaga/**").uri("lb://ms-vaga"))
+                .route(r -> r.path("/api/adm/**").uri("lb://ms-administrator"))
                 .build();
     }
 }

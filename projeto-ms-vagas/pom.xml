@@ -21,6 +21,7 @@
         <module>ms-gateway</module>
         <module>ms-user</module>
         <module>ms-vaga</module>
+        <module>ms-administrator</module>
     </modules>
 
     <properties>
