@@ -1,24 +1,27 @@
 package com.vagasproject.msvaga.controllers;
 
+import com.vagasproject.msvaga.dto.UserVagaResponse;
 import com.vagasproject.msvaga.dto.VagaRequest;
+import com.vagasproject.msvaga.entities.UserVaga;
 import com.vagasproject.msvaga.entities.Vaga;
+import com.vagasproject.msvaga.service.UserVagaService;
 import com.vagasproject.msvaga.service.VagaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/vaga")
 @RequiredArgsConstructor
 public class VagaController {
     private final VagaService vagaService;
+    private final UserVagaService userVagaService;
 
     @PostMapping
     public ResponseEntity<Vaga> insertVaga(@Valid @RequestBody VagaRequest vagaRequest) {
@@ -31,5 +34,12 @@ public class VagaController {
                 .toUri();
 
         return ResponseEntity.created(location).body(vaga);
+    }
+
+    @GetMapping(params = "email")
+    public ResponseEntity<List<UserVagaResponse>> getVagasByAdm(@RequestParam("email") String email) {
+        List<UserVaga> lista = userVagaService.listVagasByEmail(email);
+        List<UserVagaResponse> resultList = lista.stream().map(UserVagaResponse::fromModel).collect(Collectors.toList());
+        return ResponseEntity.ok(resultList);
     }
 }

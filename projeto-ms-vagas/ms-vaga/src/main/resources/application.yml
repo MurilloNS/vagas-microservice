@@ -25,7 +25,3 @@ spring:
       database: ms-vagas
       port: 27017
       host: localhost
-      
-mq:
-  queues:
-    teste: teste
