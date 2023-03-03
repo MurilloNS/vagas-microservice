@@ -2,6 +2,7 @@ package com.vagasproject.msadministrator.controllers;
 
 import com.vagasproject.msadministrator.dto.AdministratorRequest;
 import com.vagasproject.msadministrator.dto.AdministratorResponse;
+import com.vagasproject.msadministrator.dto.InsertVagaRequest;
 import com.vagasproject.msadministrator.entities.Administrator;
 import com.vagasproject.msadministrator.services.AdministratorService;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,10 @@ public class AdministratorController {
     @GetMapping("/{id}")
     public ResponseEntity<AdministratorResponse> getAdmById(@PathVariable Long id) {
         return ResponseEntity.ok(administratorService.getAdmById(id));
+    }
+
+    @PostMapping("/insert-vaga")
+    public ResponseEntity insertVaga(@RequestBody InsertVagaRequest insertVagaRequest) {
+        return ResponseEntity.ok(administratorService.insertVaga(insertVagaRequest));
     }
 }
