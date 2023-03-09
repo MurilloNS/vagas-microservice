@@ -1,8 +1,8 @@
-package com.vagasproject.msvaga.service.impl;
+package com.vagasproject.msvaga.services.impl;
 
 import com.vagasproject.msvaga.entities.UserVaga;
 import com.vagasproject.msvaga.repositories.UserVagaRepository;
-import com.vagasproject.msvaga.service.UserVagaService;
+import com.vagasproject.msvaga.services.UserVagaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

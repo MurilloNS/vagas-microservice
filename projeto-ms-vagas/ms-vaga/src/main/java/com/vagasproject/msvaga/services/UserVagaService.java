@@ -1,4 +1,4 @@
-package com.vagasproject.msvaga.service;
+package com.vagasproject.msvaga.services;
 
 import com.vagasproject.msvaga.entities.UserVaga;
 

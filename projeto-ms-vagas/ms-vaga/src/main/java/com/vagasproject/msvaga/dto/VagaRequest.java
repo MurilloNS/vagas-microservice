@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class VagaRequest {
+    private Long idAdm;
     @NotNull(message = "O nome da vaga é obrigatório")
     private String name;
     @NotNull(message = "A descrição da vaga é obrigatório")

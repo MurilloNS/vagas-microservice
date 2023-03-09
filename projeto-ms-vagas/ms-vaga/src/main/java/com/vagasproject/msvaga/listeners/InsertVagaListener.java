@@ -24,7 +24,7 @@ public class InsertVagaListener {
         try {
             ObjectMapper mapper = new ObjectMapper();
             InsertVagaRequest insertVagaRequest = mapper.readValue(payload, InsertVagaRequest.class);
-            Vaga vaga = Vaga.builder().name(insertVagaRequest.getName()).description(insertVagaRequest.getDescription())
+            Vaga vaga = Vaga.builder().idAdm(insertVagaRequest.getIdAdm()).name(insertVagaRequest.getName()).description(insertVagaRequest.getDescription())
                     .benefit(insertVagaRequest.getBenefit()).statusVaga(StatusVaga.PENDENTE)
                     .initDate(LocalDate.now()).finalizedDate(null).build();
 

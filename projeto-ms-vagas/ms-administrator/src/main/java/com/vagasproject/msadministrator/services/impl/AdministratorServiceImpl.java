@@ -42,9 +42,14 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public InsertVagaRequest insertVaga(InsertVagaRequest insertVagaRequest) {
+    public InsertVagaRequest insertVaga(Long idAdm, InsertVagaRequest insertVagaRequest) {
         try {
-            return(insertVagaPublisher.insertVaga(insertVagaRequest));
+            if(administratorRepository.findById(idAdm).get() != null) {
+                insertVagaRequest.setIdAdm(idAdm);
+                return (insertVagaPublisher.insertVaga(insertVagaRequest));
+            } else {
+                throw new ErrorInsertVagaException("Administrador inválido!");
+            }
         } catch (Exception e) {
             throw new ErrorInsertVagaException(e.getMessage());
         }

@@ -37,8 +37,8 @@ public class AdministratorController {
         return ResponseEntity.ok(administratorService.getAdmById(id));
     }
 
-    @PostMapping("/insert-vaga")
-    public ResponseEntity insertVaga(@RequestBody InsertVagaRequest insertVagaRequest) {
-        return ResponseEntity.ok(administratorService.insertVaga(insertVagaRequest));
+    @PostMapping("/{idAdm}/insert-vaga")
+    public ResponseEntity insertVaga(@PathVariable Long idAdm, @RequestBody InsertVagaRequest insertVagaRequest) {
+        return ResponseEntity.ok(administratorService.insertVaga(idAdm, insertVagaRequest));
     }
 }

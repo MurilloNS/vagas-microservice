@@ -9,5 +9,5 @@ public interface AdministratorService {
     public Administrator saveAdm(AdministratorRequest administratorRequest);
     public AdministratorResponse getAdmById(Long id);
 
-    public InsertVagaRequest insertVaga (InsertVagaRequest insertVagaRequest);
+    public InsertVagaRequest insertVaga (Long idAdm, InsertVagaRequest insertVagaRequest);
 }

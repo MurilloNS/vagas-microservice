@@ -1,11 +1,12 @@
 package com.vagasproject.msvaga.controllers;
 
+import com.vagasproject.msvaga.dto.AdmVagaResponse;
 import com.vagasproject.msvaga.dto.UserVagaResponse;
 import com.vagasproject.msvaga.dto.VagaRequest;
 import com.vagasproject.msvaga.entities.UserVaga;
 import com.vagasproject.msvaga.entities.Vaga;
-import com.vagasproject.msvaga.service.UserVagaService;
-import com.vagasproject.msvaga.service.VagaService;
+import com.vagasproject.msvaga.services.UserVagaService;
+import com.vagasproject.msvaga.services.VagaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,14 @@ public class VagaController {
     }
 
     @GetMapping(params = "email")
-    public ResponseEntity<List<UserVagaResponse>> getVagasByAdm(@RequestParam("email") String email) {
+    public ResponseEntity<List<UserVagaResponse>> getVagasByUser(@RequestParam("email") String email) {
         List<UserVaga> lista = userVagaService.listVagasByEmail(email);
         List<UserVagaResponse> resultList = lista.stream().map(UserVagaResponse::fromModel).collect(Collectors.toList());
         return ResponseEntity.ok(resultList);
+    }
+
+    @GetMapping("/{idAdm}")
+    public ResponseEntity<List<AdmVagaResponse>> getVagasByIdAdm(@PathVariable Long idAdm) {
+        return ResponseEntity.ok(vagaService.getVagasByIdAdm(idAdm));
     }
 }

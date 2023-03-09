@@ -1,23 +1,16 @@
-package com.vagasproject.msvaga.entities;
+package com.vagasproject.msvaga.dto;
 
 import com.vagasproject.msvaga.enums.StatusVaga;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
-@Document(collection = "vagas")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Vaga {
-    @Id
-    private String id;
+@AllArgsConstructor
+public class AdmVagaResponse {
     private Long idAdm;
     private String name;
     private String description;
